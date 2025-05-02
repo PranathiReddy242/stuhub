@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="profile-section">
+    <h2><i class="fas fa-user-circle"></i> Your Profile</h2>
+    
+    <div class="user-posts">
+        <h3>Your Posts</h3>
+        
+        {% for post in user_posts %}
+        <div class="post">
+            <div class="post-header">
+                {% if post['user_id'] %}
+                    <i class="fas fa-user"></i> You
+                {% else %}
+                    <i class="fas fa-user-secret"></i> Anonymous
+                {% endif %}
+                <span class="post-time">{{ post['created_at']|datetimeformat }}</span>
+            </div>
+            <div class="post-content">
+                {{ post['content'] }}
+            </div>
+        </div>
+        {% else %}
+        <p class="no-posts">You haven't made any posts yet.</p>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

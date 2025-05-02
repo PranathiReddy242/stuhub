@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="post-section">
+    {% if current_user.is_authenticated %}
+    <form class="post-form" method="POST" action="{{ url_for('create_post') }}">
+        <textarea name="content" placeholder="What's on your mind?" required></textarea>
+        <div class="post-options">
+            <label>
+                <input type="checkbox" name="anonymous">
+                Post Anonymously
+            </label>
+            <button type="submit">Post</button>
+        </div>
+    </form>
+    {% endif %}
+
+    <div class="posts">
+        {% for post in posts %}
+        <div class="post">
+            <div class="post-header">
+                {% if post['user_id'] %}
+                    <i class="fas fa-user"></i> {{ post['username'] }}
+                {% else %}
+                    <i class="fas fa-user-secret"></i> Anonymous
+                {% endif %}
+                <span class="post-time">{{ post['created_at']|datetimeformat }}</span>
+            </div>
+            <div class="post-content">
+                {{ post['content'] }}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}
